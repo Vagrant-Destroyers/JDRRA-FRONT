@@ -1,40 +1,50 @@
 <template>
   <b-container>
-    <v-card elevation="2" v-for="(job, index) in jobs" :key="index" id="card">
-        <v-card-text @click="show = !show" flat>
-          <v-expand-transition>
-            <div v-show="show">This is a small paragraph</div>
-          </v-expand-transition>
-          <v-expand-transition>
-            <div v-show="!show">
-              <p>
-                that's the first thing that's ever gone wrong swishifying
-                mobilomobile death sports well, you all know what laughter
-                sounds like. smendler oodily suck shack oodily crazy critter
-                reverse vampires sandal-wearing goldfish tenders doctorb your
-                older, balder, fatter son homerhol kwyjibo boostafazoo
-                saxamaphone menu boy jebus spokesrebel kung-fu hippie
-              </p>
-            </div>
-          </v-expand-transition>
-        </v-card-text>
-
-        <v-card-text v-show="!show"></v-card-text>
-    </v-card>
+    <div class="search">
+      <searchBox></searchBox>
+    </div>
+    <div class="cards">
+      <jobCard v-for="job in datos" :job="job" :key="job.id" id="cards"></jobCard>
+    </div>
+    <b-pagination
+      v-model="currentPage"
+      pills
+      :total-rows="totalRows"
+      :per-page="perPage"
+      size="lg"
+      aria-controls="cards"
+    ></b-pagination>
   </b-container>
 </template>
 
 <script>
 import jobs from '@/data/jobs'
 
+import jobCard from '@/components/jobCard.vue'
+import searchBox from '@/components/searchBox.vue'
+
 export default {
+  name: 'Jobs',
   data: () => {
     return {
       jobs: jobs,
-      show: true
+      currentPage: 1,
+      perPage: 5,
+      posts: jobs,
+      totalRows: jobs.length
+    }
+  },
+  components: {
+    jobCard,
+    searchBox
+  },
+  computed: {
+    datos () {
+      return this.jobs.slice(
+        (this.currentPage - 1) * this.perPage,
+        this.currentPage * this.perPage)
     }
   }
-
 }
 </script>
 
@@ -46,5 +56,18 @@ export default {
 #card {
     margin: 10px;
     border-radius: 30px;
+}
+.page-item.active .page-link {
+  background-color: #42b983;
+  border-color: #42b983;
+}
+
+.page-link:hover {
+  color: #42b983;
+}
+
+.pagination {
+  justify-content: center;
+  margin-bottom: 5rem;
 }
 </style>
