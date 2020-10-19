@@ -13,7 +13,7 @@ export default {
 <style>
 .tagcontainer {
     height: 40px;
-    border: 1px solid #707070;
+    border: 1px solid black;
     border-radius: 30px;
     padding: 2px 15px;
     display: inline-block;
@@ -25,7 +25,7 @@ export default {
 .tagcircle {
     height: 15px;
     width: 15px;
-    background-color: #707070;
+    background-color: black;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -35,6 +35,6 @@ export default {
     font-size: 20px;
     font-weight: 800;
     letter-spacing: -0.034em;
-    color: #797979;
+    color: black;
 }
 </style>

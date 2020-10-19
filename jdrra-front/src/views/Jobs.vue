@@ -58,13 +58,18 @@ export default {
     border-radius: 30px;
 }
 .page-item.active .page-link {
-  background-color: #42b983;
-  border-color: #42b983;
+  background-color: #42b983 !important;
+  border-color: #42b983 !important;
+  color: white !important;
 }
 
-.page-link:hover {
-  color: #42b983;
+.page-link {
+  color: black !important;
 }
+
+/* .page-link:hover {
+  color: #42b983 !important;
+} */
 
 .pagination {
   justify-content: center;

@@ -1,25 +1,27 @@
 <template>
   <div class="wrapper">
-    <div class="search_box">
+    <div class="search_box" v-bind:style="[leftActive === false ? {'border-bottom-left-radius': '0px'} : {}]">
       <div class="dropdown">
-        <div class="default_option" @click="leftActive = !leftActive">All</div>
+        <div class="default_option" @click="leftActive = !leftActive"><b>Category</b></div>
         <ul v-show="!leftActive">
-          <li>All</li>
-          <li>Recent</li>
-          <li>Popular</li>
+          <li><b>Front-End</b></li>
+          <li><b>Back-End</b></li>
+          <li><b>DevOps</b></li>
+          <li><b>Full-Stack</b></li>
         </ul>
       </div>
       <div class="dropdown">
-        <div class="default_option" @click="rightActive = !rightActive">All</div>
+        <div class="default_option" @click="rightActive = !rightActive"><b>Popularity</b></div>
         <ul v-show="!rightActive">
-          <li>All</li>
-          <li>Recent</li>
-          <li>Popular</li>
+          <li><b>All</b></li>
+          <li><b>Recent</b></li>
+          <li><b>Popular</b></li>
+          <li><b>Unpopular</b></li>
         </ul>
       </div>
       <div class="search_field">
         <input type="text" class="input" placeholder="Search" v-model="searchString"/>
-        <p class="fas fa-search"></p>
+        <p class="fas fa-search" @click="requestApi"></p>
       </div>
     </div>
   </div>
@@ -32,8 +34,12 @@ export default {
     return {
       leftActive: true,
       rightActive: true,
-      searchString: '',
-      completeData: ['Angular', 'Vuejs']
+      searchString: ''
+    }
+  },
+  methods: {
+    requestApi () {
+      console.log(this.searchString)
     }
   }
 }
@@ -48,11 +54,12 @@ export default {
   outline: none;
   list-style: none;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left;
 }
 
 .wrapper .search_box{
-  border-radius: 3rem;
-  border: 1px solid #707070;
+  border-radius: 1rem;
+  border: 1px solid black;
   background: #fff;
   height: 65px;
   display: flex;
@@ -62,7 +69,7 @@ export default {
 .wrapper .search_box .dropdown{
   width: 150px;
   border-right: 2px solid #dde2f1;
-  color: #9fa3b1;
+  color: black;
   position: relative;
   cursor: pointer;
 }
@@ -75,15 +82,15 @@ export default {
 
 .wrapper .search_box .dropdown ul{
   position: absolute;
-  top: 45px;
+  top: 53px;
   left: 0px;
   background: #fff;
   width: 150px;
   padding: 20px;
-  border-left: 1px solid #707070;
-  border-right: 1px solid #707070;
-  border-bottom: 1px solid #707070;
-  border-radius: 3rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   list-style: none;
 }
 
@@ -96,19 +103,16 @@ export default {
 }
 
 .wrapper .search_box .dropdown ul li:hover{
-  color: #6f768d;
+  color: black;
 }
 
 .wrapper .search_box .dropdown:before{
-  @media (min-width: 576px) and (max-width: 767px) {
-    visibility: hidden;
-  }
   content: "";
   position: absolute;
   top: 18px;
   right: 20px;
   border: 8px solid;
-  /* border-color: #42b983 transparent transparent transparent; */
+  border-color: #42b983 transparent transparent transparent;
 }
 
 .wrapper .search_box .search_field{
@@ -124,7 +128,7 @@ export default {
   font-size: 16px;
   padding-left: 20px;
   padding-right: 38px;
-  color: #6f768d;
+  color: black;
 }
 
 .input:focus {
@@ -145,12 +149,15 @@ export default {
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-weight: 500;
   color: #9fa3b1;
 }
 ::-moz-placeholder { /* Firefox 19+ */
+  font-weight: 500;
  color: #9fa3b1;
 }
 :-ms-input-placeholder { /* IE 10+ */
+  font-weight: 500;
   color: #9fa3b1;
 }
 
