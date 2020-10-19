@@ -18,6 +18,7 @@
 </template>
 
 <script>
+/* Script :D */
 import jobs from '@/data/jobs.json'
 
 import jobCard from '@/components/jobCard.vue'
