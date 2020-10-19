@@ -3,12 +3,37 @@
     <div id="nav">
       <b-navbar variant="faded" type="light">
         <b-navbar-brand tag="h1" class="mb-0 mr-auto" to="/Jobs" style="color: black;">RemoteJobs</b-navbar-brand>
-        <b-nav-item to="#" class="login">Login</b-nav-item>
+        <b-nav-item class="login">
+          <div v-if="!$auth.loading">
+            <!-- show login when not authenticated -->
+            <button v-if="!$auth.isAuthenticated" @click="login">Log in</button>
+            <!-- show logout when authenticated -->
+            <button v-if="$auth.isAuthenticated" @click="logout">Log out</button>
+          </div>
+        </b-nav-item>
       </b-navbar>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+
+export default {
+  methods: {
+    // Log the user in
+    login () {
+      this.$auth.loginWithRedirect()
+    },
+    // Log the user out
+    logout () {
+      this.$auth.logout({
+        returnTo: window.location.origin
+      })
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

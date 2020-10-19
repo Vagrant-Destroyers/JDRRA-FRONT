@@ -2,31 +2,40 @@
   <div class="wrapper">
     <div class="search_box">
       <div class="dropdown">
-        <div class="default_option">All</div>
-        <ul>
+        <div class="default_option" @click="leftActive = !leftActive">All</div>
+        <ul v-show="!leftActive">
           <li>All</li>
           <li>Recent</li>
           <li>Popular</li>
         </ul>
       </div>
       <div class="dropdown">
-        <div class="default_option">All</div>
-        <ul>
+        <div class="default_option" @click="rightActive = !rightActive">All</div>
+        <ul v-show="!rightActive">
           <li>All</li>
           <li>Recent</li>
           <li>Popular</li>
         </ul>
       </div>
       <div class="search_field">
-        <input type="text" class="input" placeholder="Search" />
-        <i class="fas fa-search"></i>
+        <input type="text" class="input" placeholder="Search" v-model="searchString"/>
+        <p class="fas fa-search"></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
+  data () {
+    return {
+      leftActive: true,
+      rightActive: true,
+      searchString: '',
+      completeData: ['Angular', 'Vuejs']
+    }
+  }
 }
 </script>
 
@@ -66,16 +75,16 @@ export default {
 
 .wrapper .search_box .dropdown ul{
   position: absolute;
-  top: 70px;
-  left: -10px;
+  top: 45px;
+  left: 0px;
   background: #fff;
   width: 150px;
   padding: 20px;
-  display: none;
-}
-
-.wrapper .search_box .dropdown ul.active{
-  display: block;
+  border-left: 1px solid #707070;
+  border-right: 1px solid #707070;
+  border-bottom: 1px solid #707070;
+  border-radius: 3rem;
+  list-style: none;
 }
 
 .wrapper .search_box .dropdown ul li{
@@ -103,7 +112,7 @@ export default {
 }
 
 .wrapper .search_box .search_field{
-  width: 500px;
+  width: 70%;
   height: 100%;
   position: relative;
 }
@@ -118,6 +127,10 @@ export default {
   color: #6f768d;
 }
 
+.input:focus {
+  outline: none;
+}
+
 .wrapper .search_box .search_field .fas{
   position: absolute;
   top: 10px;
@@ -125,6 +138,10 @@ export default {
   font-size: 22px;
   color: #42b983;
   cursor: pointer;
+}
+
+.fa-search {
+  text-align: right;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

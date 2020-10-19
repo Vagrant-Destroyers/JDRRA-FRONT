@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import jobs from '@/data/jobs'
+import jobs from '@/data/jobs.json'
 
 import jobCard from '@/components/jobCard.vue'
 import searchBox from '@/components/searchBox.vue'
