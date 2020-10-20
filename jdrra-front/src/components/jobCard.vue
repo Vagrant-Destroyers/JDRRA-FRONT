@@ -85,6 +85,15 @@ i.showMore {
     margin-top: 0.5rem;
 }
 
+@media (max-width: 575px) {
+  .vote {
+      float: none;
+      margin-top: -2rem;
+      margin-bottom: 2rem;
+      margin-left: 1rem;
+  }
+}
+
 .job-1 {
     margin: 2rem;
     &__container {

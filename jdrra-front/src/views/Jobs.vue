@@ -76,4 +76,10 @@ export default {
   justify-content: center;
   margin-bottom: 5rem;
 }
+
+@media (max-width: 575px) {
+  .pagination {
+    transform: scale(0.8);
+  }
+}
 </style>

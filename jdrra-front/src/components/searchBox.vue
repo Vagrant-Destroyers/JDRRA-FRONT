@@ -29,6 +29,32 @@
           </b-form-checkbox-group>
         </ul>
       </div>
+      <div class="dropdown less">
+        <div class="default_option">
+          <i class="fas fa-caret-down fa-2x caret-down" @click="lessActive = !lessActive"></i>
+        </div>
+        <ul v-show="!lessActive">
+          <div class="title">
+            <b>Popularity</b>
+          </div>
+          <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
+            <li><b-form-checkbox value="all-popularity"><b>All</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="recent"><b>Recent</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="popular"><b>Popular</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="unpopular"><b>Unpopular</b></b-form-checkbox></li>
+          </b-form-checkbox-group>
+          <div class="title">
+            <b>Category</b>
+          </div>
+          <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
+            <li><b-form-checkbox value="all-category"><b>All</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="front-end"><b>Front-End</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="back-end"><b>Back-End</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="devops"><b>DevOps</b></b-form-checkbox></li>
+          </b-form-checkbox-group>
+        </ul>
+      </div>
+
       <div class="search_field">
         <input type="text" class="input" placeholder="Search" v-model="searchString"/>
         <p class="fas fa-search" @click="requestApi"></p>
@@ -44,6 +70,7 @@ export default {
     return {
       leftActive: true,
       rightActive: true,
+      lessActive: true,
       searchString: '',
       selected: []
     }
@@ -91,8 +118,11 @@ export default {
   color: #42b983;
   cursor: pointer;
 }
+.dropdown.less {
+  display: none;
+}
 
-@media (max-width: 991px) {
+@media (max-width: 575px) {
   .wrapper .search_box .dropdown{
     width: 90px;
   }
@@ -101,10 +131,23 @@ export default {
       display: none;
   }
 
+  .wrapper .search_box .dropdown {
+    display: none;
+  }
+
+  .wrapper .search_box .dropdown.less {
+    display: block;
+  }
+
+  .wrapper .search_box .dropdown.less div.title {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+
   .wrapper .search_box .dropdown .default_option i {
       margin-left: -0.5rem;
   }
-
 }
 
 .wrapper .search_box .dropdown .default_option{
