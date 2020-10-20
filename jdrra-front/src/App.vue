@@ -103,6 +103,10 @@ body {
     background-image: url("../src/img/forma.svg");
     background-position: -5rem -30rem;
   }
+  @media (max-width: 575px) {
+    background-image: url("../src/img/bacground_mobile.svg");
+    background-position: -15rem -43rem;
+  }
 }
 
 </style>

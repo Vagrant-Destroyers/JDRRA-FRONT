@@ -2,7 +2,10 @@
   <div class="wrapper">
     <div class="search_box" v-bind:style="[leftActive === false ? {'border-bottom-left-radius': '0px'} : {}]">
       <div class="dropdown">
-        <div class="default_option" @click="leftActive = !leftActive"><b>Category</b></div>
+        <div class="default_option">
+          <b>Category</b>
+          <i class="fas fa-caret-down fa-2x caret-down" @click="leftActive = !leftActive"></i>
+        </div>
         <ul v-show="!leftActive">
           <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
             <li><b-form-checkbox value="all-category"><b>All</b></b-form-checkbox></li>
@@ -13,7 +16,10 @@
         </ul>
       </div>
       <div class="dropdown">
-        <div class="default_option" @click="rightActive = !rightActive"><b>Popularity</b></div>
+        <div class="default_option">
+          <b>Popularity</b>
+          <i class="fas fa-caret-down fa-2x caret-down" @click="rightActive = !rightActive"></i>
+        </div>
         <ul v-show="!rightActive">
           <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
             <li><b-form-checkbox value="all-popularity"><b>All</b></b-form-checkbox></li>
@@ -76,13 +82,40 @@ export default {
   border-right: 2px solid #dde2f1;
   color: black;
   position: relative;
+  cursor: default;
+}
+
+.default_option .caret-down {
+  margin-left: 0.5rem;
+  margin-top: -0.1rem;
+  color: #42b983;
   cursor: pointer;
+}
+
+@media (max-width: 991px) {
+  .wrapper .search_box .dropdown{
+    width: 90px;
+  }
+
+  .wrapper .search_box .dropdown .default_option b {
+      display: none;
+  }
+
+  .wrapper .search_box .dropdown .default_option i {
+      margin-left: -0.5rem;
+  }
+
 }
 
 .wrapper .search_box .dropdown .default_option{
   text-transform: uppercase;
   padding: 13px 15px;
   font-size: 14px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -0.2rem;
 }
 
 .wrapper .search_box .dropdown ul{
@@ -109,15 +142,6 @@ export default {
 
 .wrapper .search_box .dropdown ul li:hover{
   color: black;
-}
-
-.wrapper .search_box .dropdown:before{
-  content: "";
-  position: absolute;
-  top: 18px;
-  right: 20px;
-  border: 8px solid;
-  border-color: #42b983 transparent transparent transparent;
 }
 
 .wrapper .search_box .search_field{
