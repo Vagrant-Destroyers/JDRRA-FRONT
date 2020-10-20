@@ -16,11 +16,11 @@
                         <br>
                         <b-button :href="job.link">Read more</b-button>
                         <div class="vote">
-                            <div class="downvote">
+                            <div class="upvote">
                                 <i class="fas fa-thumbs-up fa-2x"></i>
                                 <!-- <p>Downvote</p> -->
                             </div>
-                            <div class="upvote">
+                            <div class="downvote">
                                 <i class="fas fa-thumbs-down fa-2x"></i>
                                 <!-- <p>Upvote</p> -->
                             </div>
@@ -79,6 +79,10 @@ i.showMore {
 
 .vote i {
     margin: 0.5rem;
+}
+
+.downvote {
+    margin-top: 0.5rem;
 }
 
 .job-1 {
