@@ -15,6 +15,10 @@ const routes = [
     path: '/jobs',
     name: 'Jobs',
     component: Jobs
+  },
+  {
+    path: '*',
+    component: NotFoundComponent
   }
 ]
 
