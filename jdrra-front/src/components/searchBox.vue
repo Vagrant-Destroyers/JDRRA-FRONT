@@ -4,19 +4,23 @@
       <div class="dropdown">
         <div class="default_option" @click="leftActive = !leftActive"><b>Category</b></div>
         <ul v-show="!leftActive">
-          <li><b>Front-End</b></li>
-          <li><b>Back-End</b></li>
-          <li><b>DevOps</b></li>
-          <li><b>Full-Stack</b></li>
+          <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
+            <li><b-form-checkbox value="all-category"><b>All</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="front-end"><b>Front-End</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="back-end"><b>Back-End</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="devops"><b>DevOps</b></b-form-checkbox></li>
+          </b-form-checkbox-group>
         </ul>
       </div>
       <div class="dropdown">
         <div class="default_option" @click="rightActive = !rightActive"><b>Popularity</b></div>
         <ul v-show="!rightActive">
-          <li><b>All</b></li>
-          <li><b>Recent</b></li>
-          <li><b>Popular</b></li>
-          <li><b>Unpopular</b></li>
+          <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
+            <li><b-form-checkbox value="all-popularity"><b>All</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="recent"><b>Recent</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="popular"><b>Popular</b></b-form-checkbox></li>
+            <li><b-form-checkbox value="unpopular"><b>Unpopular</b></b-form-checkbox></li>
+          </b-form-checkbox-group>
         </ul>
       </div>
       <div class="search_field">
@@ -34,12 +38,13 @@ export default {
     return {
       leftActive: true,
       rightActive: true,
-      searchString: ''
+      searchString: '',
+      selected: []
     }
   },
   methods: {
     requestApi () {
-      console.log(this.searchString)
+      console.log(this.selected, this.searchString)
     }
   }
 }
@@ -86,7 +91,7 @@ export default {
   left: 0px;
   background: #fff;
   width: 150px;
-  padding: 20px;
+  padding: 16px;
   border: 1px solid black;
   border-radius: 1rem;
   border-top-left-radius: 0px;
