@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Jobs from '../views/Jobs.vue'
+import NotFoundComponent from '../components/NotFoundComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,10 @@ const routes = [
     path: '/jobs',
     name: 'Jobs',
     component: Jobs
+  },
+  {
+    path: '*',
+    component: NotFoundComponent
   }
 ]
 
