@@ -4,12 +4,12 @@
       <searchBox></searchBox>
     </div>
     <div class="cards">
-      <jobCard v-for="job in datos" :job="job" :key="job.id" id="cards"></jobCard>
+      <jobCard v-for="job in $store.state.finalJobs" :job="job" :key="job.id" id="cards"></jobCard>
     </div>
     <b-pagination
       v-model="currentPage"
       pills
-      :total-rows="totalRows"
+      :total-rows="5"
       :per-page="perPage"
       size="lg"
       aria-controls="cards"
@@ -19,29 +19,34 @@
 
 <script>
 /* Script :D */
-import jobs from '@/data/jobs.json'
-
 import jobCard from '@/components/jobCard.vue'
 import searchBox from '@/components/searchBox.vue'
+import axios from 'axios'
 
 export default {
   name: 'Jobs',
   data: () => {
     return {
-      jobs: jobs,
       currentPage: 1,
-      perPage: 5,
-      posts: jobs,
-      totalRows: jobs.length
+      perPage: 8,
+      totalRows: 5
     }
   },
   components: {
     jobCard,
     searchBox
   },
+  mounted () {
+    axios.get('http://api.vagrantdestroyers.fun/jobpost')
+      .then(response => {
+        this.$store.commit('changeData', response.data)
+        this.posts = this.$store.state.finalJobs
+        this.totalRows = this.$store.state.finalJobs.length
+      }).catch(err => console.log(err))
+  },
   computed: {
     datos () {
-      return this.jobs.slice(
+      return this.$store.state.finalJobs.slice(
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage)
     }

@@ -10,6 +10,7 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.12.1",
     "@trevoreyre/autocomplete-vue": "^2.2.0",
+    "axios": "^0.20.0",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",

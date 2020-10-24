@@ -16,11 +16,11 @@
                         <br>
                         <b-button :href="job.link">Read more</b-button>
                         <div class="vote">
-                            <div class="upvote">
+                            <div class="upvote" @click="setUpVote(job.id)">
                                 <i class="fas fa-thumbs-up fa-2x"></i>
                                 <!-- <p>Downvote</p> -->
                             </div>
-                            <div class="downvote">
+                            <div class="downvote" @click="setDownVote(job.id)">
                                 <i class="fas fa-thumbs-down fa-2x"></i>
                                 <!-- <p>Upvote</p> -->
                             </div>
@@ -36,6 +36,7 @@
 
 <script>
 import techTag from '@/components/techTag.vue'
+import axios from 'axios'
 
 export default {
   props: ['job'],
@@ -44,8 +45,19 @@ export default {
   },
   data () {
     return {
-      posts: ['Angular', 'React', 'Node.js'],
+      posts: [],
       show: true
+    }
+  },
+  mounted () {
+    this.posts = this.job.jobbacktechs.concat(this.job.jobfronttechs).concat(this.job.jobdevopstechs)
+  },
+  methods: {
+    setUpVote (id) {
+      axios.put('http://api.vagrantdestroyers.fun/voteup/' + id)
+    },
+    setDownVote (id) {
+      axios.put('http://api.vagrantdestroyers.fun/votedown/' + id)
     }
   }
 }

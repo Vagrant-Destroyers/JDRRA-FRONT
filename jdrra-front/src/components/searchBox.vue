@@ -8,7 +8,6 @@
         </div>
         <ul v-show="!leftActive">
           <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
-            <li><b-form-checkbox value="all-category"><b>All</b></b-form-checkbox></li>
             <li><b-form-checkbox value="front-end"><b>Front-End</b></b-form-checkbox></li>
             <li><b-form-checkbox value="back-end"><b>Back-End</b></b-form-checkbox></li>
             <li><b-form-checkbox value="devops"><b>DevOps</b></b-form-checkbox></li>
@@ -22,8 +21,6 @@
         </div>
         <ul v-show="!rightActive">
           <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
-            <li><b-form-checkbox value="all-popularity"><b>All</b></b-form-checkbox></li>
-            <li><b-form-checkbox value="recent"><b>Recent</b></b-form-checkbox></li>
             <li><b-form-checkbox value="popular"><b>Popular</b></b-form-checkbox></li>
             <li><b-form-checkbox value="unpopular"><b>Unpopular</b></b-form-checkbox></li>
           </b-form-checkbox-group>
@@ -38,8 +35,6 @@
             <b>Popularity</b>
           </div>
           <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
-            <li><b-form-checkbox value="all-popularity"><b>All</b></b-form-checkbox></li>
-            <li><b-form-checkbox value="recent"><b>Recent</b></b-form-checkbox></li>
             <li><b-form-checkbox value="popular"><b>Popular</b></b-form-checkbox></li>
             <li><b-form-checkbox value="unpopular"><b>Unpopular</b></b-form-checkbox></li>
           </b-form-checkbox-group>
@@ -47,7 +42,6 @@
             <b>Category</b>
           </div>
           <b-form-checkbox-group id="checkbox-group-2" v-model="selected" name="flavour-2">
-            <li><b-form-checkbox value="all-category"><b>All</b></b-form-checkbox></li>
             <li><b-form-checkbox value="front-end"><b>Front-End</b></b-form-checkbox></li>
             <li><b-form-checkbox value="back-end"><b>Back-End</b></b-form-checkbox></li>
             <li><b-form-checkbox value="devops"><b>DevOps</b></b-form-checkbox></li>
@@ -64,6 +58,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
   data () {
@@ -72,12 +67,100 @@ export default {
       rightActive: true,
       lessActive: true,
       searchString: '',
-      selected: []
+      selected: [],
+      apiResponse: undefined,
+      finalData: []
     }
   },
   methods: {
     requestApi () {
-      console.log(this.selected, this.searchString)
+      axios.get('http://api.vagrantdestroyers.fun/jobpost')
+        .then(response => {
+          this.apiResponse = response.data
+          this.frontEndFilter()
+          this.backEndFilter()
+          this.devOpsFilter()
+          this.mostVoted()
+          this.inputFilter()
+          this.$router.push('Jobs')
+          this.$store.commit('changeData', this.finalData)
+          this.finalData = []
+        }).catch(err => console.log(err))
+    },
+
+    frontEndFilter () {
+      if (this.selected.includes('front-end')) {
+        for (const index in this.apiResponse) {
+          if (this.apiResponse[index].techtypefront === true && !this.finalData.some(obj => obj.id === this.apiResponse[index].id)) {
+            this.finalData.push(this.apiResponse[index])
+          }
+        }
+      }
+    },
+
+    backEndFilter () {
+      if (this.selected.includes('back-end')) {
+        for (const index in this.apiResponse) {
+          if (this.apiResponse[index].techtypeback === true && !this.finalData.some(obj => obj.id === this.apiResponse[index].id)) {
+            this.finalData.push(this.apiResponse[index])
+          }
+        }
+      }
+    },
+
+    devOpsFilter () {
+      if (this.selected.includes('devops')) {
+        for (const index in this.apiResponse) {
+          if (this.apiResponse[index].techtypedevops === true && !this.finalData.some(obj => obj.id === this.apiResponse[index].id)) {
+            this.finalData.push(this.apiResponse[index])
+          }
+        }
+      }
+    },
+
+    mostVoted () {
+      if (this.selected.includes('popular')) {
+        axios.get('http://api.vagrantdestroyers.fun/mostvotes')
+          .then(response => {
+            const votes = response.data
+            for (const index in votes) {
+              if (!this.finalData.some(obj => obj.id === votes.id)) {
+                this.finalData.push(votes[index])
+              }
+            }
+          }).catch(err => console.log(err))
+      }
+    },
+
+    lessVoted () {
+      if (this.selected.includes('popular')) {
+        axios.get('http://api.vagrantdestroyers.fun/downvotes')
+          .then(response => {
+            const votes = response.data
+            for (const index in votes) {
+              if (!this.finalData.some(obj => obj.id === votes.id)) {
+                this.finalData.push(votes[index])
+              }
+            }
+          }).catch(err => console.log(err))
+      }
+    },
+
+    inputFilter () {
+      for (const index in this.apiResponse) {
+        if (this.apiResponse[index].title.includes(this.searchString) && !this.finalData.some(obj => obj.id === this.apiResponse[index].id)) {
+          this.finalData.push(this.apiResponse[index])
+        }
+        if (this.apiResponse[index].location.includes(this.searchString) && !this.finalData.some(obj => obj.id === this.apiResponse[index].id)) {
+          this.finalData.push(this.apiResponse[index])
+        }
+        if (this.apiResponse[index].company.includes(this.searchString) && !this.finalData.some(obj => obj.id === this.apiResponse[index].id)) {
+          this.finalData.push(this.apiResponse[index])
+        }
+        if (this.apiResponse[index].jobbacktechs.includes(this.searchString) && !this.finalData.some(obj => obj.id === this.apiResponse[index].id)) {
+          this.finalData.push(this.apiResponse[index])
+        }
+      }
     }
   }
 }
