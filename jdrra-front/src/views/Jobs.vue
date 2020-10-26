@@ -4,21 +4,15 @@
       <searchBox></searchBox>
     </div>
     <div class="cards">
-      <jobCard v-for="job in $store.state.finalJobs" :job="job" :key="job.id" id="cards"></jobCard>
+      <jobCard v-for="job in pageOfItems" :job="job" :key="job.id" id="cards"></jobCard>
     </div>
-    <b-pagination
-      v-model="currentPage"
-      pills
-      :total-rows="5"
-      :per-page="perPage"
-      size="lg"
-      aria-controls="cards"
-    ></b-pagination>
+    <JwPagination :items="$store.state.finalJobs" @changePage="onChangePage"></JwPagination>
   </b-container>
 </template>
 
 <script>
 /* Script :D */
+import JwPagination from 'jw-vue-pagination'
 import jobCard from '@/components/jobCard.vue'
 import searchBox from '@/components/searchBox.vue'
 import axios from 'axios'
@@ -29,15 +23,17 @@ export default {
     return {
       currentPage: 1,
       perPage: 8,
-      totalRows: 5
+      totalRows: 5,
+      pageOfItems: []
     }
   },
   components: {
     jobCard,
-    searchBox
+    searchBox,
+    JwPagination
   },
   mounted () {
-    axios.get('http://api.vagrantdestroyers.fun/jobpost')
+    axios.get('https://api.vagrantdestroyers.fun/jobpost')
       .then(response => {
         this.$store.commit('changeData', response.data)
         this.posts = this.$store.state.finalJobs
@@ -49,6 +45,11 @@ export default {
       return this.$store.state.finalJobs.slice(
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage)
+    }
+  },
+  methods: {
+    onChangePage (pageOfItems) {
+      this.pageOfItems = pageOfItems
     }
   }
 }
@@ -79,12 +80,17 @@ export default {
 
 .pagination {
   justify-content: center;
-  margin-bottom: 5rem;
+  margin-bottom: 5rem !important;
+  margin-top: 2rem !important;
+  transform: scale(1.3);
 }
 
-@media (max-width: 575px) {
-  .pagination {
-    transform: scale(0.8);
-  }
+.pagination .page-item.first {
+  display: none !important;
 }
+
+.pagination .page-item.last {
+  display: none !important;
+}
+
 </style>

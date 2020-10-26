@@ -54,10 +54,10 @@ export default {
   },
   methods: {
     setUpVote (id) {
-      axios.put('http://api.vagrantdestroyers.fun/voteup/' + id)
+      axios.put('https://api.vagrantdestroyers.fun/voteup/' + id)
     },
     setDownVote (id) {
-      axios.put('http://api.vagrantdestroyers.fun/votedown/' + id)
+      axios.put('https://api.vagrantdestroyers.fun/votedown/' + id)
     }
   }
 }

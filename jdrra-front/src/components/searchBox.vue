@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     requestApi () {
-      axios.get('http://api.vagrantdestroyers.fun/jobpost')
+      axios.get('https://api.vagrantdestroyers.fun/jobpost')
         .then(response => {
           this.apiResponse = response.data
           this.frontEndFilter()
@@ -120,7 +120,7 @@ export default {
 
     mostVoted () {
       if (this.selected.includes('popular')) {
-        axios.get('http://api.vagrantdestroyers.fun/mostvotes')
+        axios.get('https://api.vagrantdestroyers.fun/mostvotes')
           .then(response => {
             const votes = response.data
             for (const index in votes) {
@@ -134,7 +134,7 @@ export default {
 
     lessVoted () {
       if (this.selected.includes('popular')) {
-        axios.get('http://api.vagrantdestroyers.fun/downvotes')
+        axios.get('https://api.vagrantdestroyers.fun/downvotes')
           .then(response => {
             const votes = response.data
             for (const index in votes) {
