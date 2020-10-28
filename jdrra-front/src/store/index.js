@@ -11,7 +11,7 @@ export default new Vuex.Store({
   mutations: {
     changeData (state, data) {
       if (data.length === 0) {
-        axios.get('http://api.vagrantdestroyers.fun/jobpost')
+        axios.get('https://api.vagrantdestroyers.fun/jobpost')
           .then(response => {
             state.finalJobs = response.data
           }).catch(err => console.log(err))
